@@ -60,7 +60,7 @@ Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
 y  <- dat[[1]]$y[train.index,] - dat[[1]]$intercept
 ```
 
-With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS` 
+With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS`.
 
 ```
 phi <- 5e-5 #smoothness parameter
@@ -69,6 +69,12 @@ lambda2 <- 5 #global sparsity parameter
 
 result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive=TRUE, maxit=5000, tol=0.0005, lambdas = c(1e-3,1e-4,1e-5,1e-6))
 ```
+Generally, we would like to find optimal parameters using K-fold cross-validation for multivariate FLR models. We can use 	`cv.FadDoS` as follows. 
+
+```
+cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
+```
+
 
 
 

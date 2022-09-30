@@ -15,4 +15,4 @@ of coefficient functions with nice double-sparsity and smoothness control.
 
 
 ## Main Functions
-*`FDoS`: Fit multivariate FLR models with known tuning parameters and obtain coefficient estimates with double-sparsity property.
+* `FDoS`: Fit multivariate FLR models with known tuning parameters and obtain coefficient estimates with double-sparsity property.

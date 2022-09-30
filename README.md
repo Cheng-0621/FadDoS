@@ -79,7 +79,7 @@ lambda2 <- seq(3, 5, length.out=5)
 cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
 ```
 
-##Authors
+## Authors
 * Cheng Cao, Jiguo Cao, Hailiang Wang, Kwok-Leung Tsui, Xinyue Li
 
 

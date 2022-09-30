@@ -40,5 +40,13 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 * `maxit`: Maximum iteration to stop the algorithm. 
 * `tol`: Tolerance to stop the algorithm. 
 
+### Values
+* `intercept`: The estimated intercept. 
+* `beta.hat`:  The list of estimated double-sparsity coefficient functions.
+* `yhat`: The fitted values of response.
+* `phi`: Optimal smoothness parameter. 
+* `lambda1`: Optimal local sparsity parameter. 
+* `lambda2`: Optimal global sparsity parameter
+
 ## Examples
 

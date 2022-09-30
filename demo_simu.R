@@ -87,3 +87,5 @@ plot(x=time, y=beta0.func(time), type="l", lty=1, col=grey(0.9), lwd=2,
 polygon(x=c(time,1), y=c(beta0.func(time),0), col = grey(0.95), border = NA)
 for (i in 3:10) lines(x=time, y=cv.betahat[[i]], col="#0072B5FF", lwd=3, lty=2) 
 
+
+

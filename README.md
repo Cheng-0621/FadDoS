@@ -20,7 +20,7 @@ of coefficient functions with nice double-sparsity and smoothness control.
 FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, adaptive=FALSE, lambdas, maxit, tol)
 ```
 
-* `cv.FadDoS`: Does k-fold cross-validation for FadDoS, produces coefficient function estimates by optimal tuning parameter. 
+* `cv.FadDoS`: Does k-fold cross-validation (CV) for FadDoS, produces coefficient function estimates by optimal tuning parameter. 
 
 ```
 cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adaptive=FALSE, lambdas, K, maxit, tol)
@@ -36,7 +36,7 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 * `lambda2`: Global sparsity parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
 * `adaptive`: Adaptive penalization is used. If `FALSE`, it is FDoS estimator. 
 * `lambdas`: Tuning parameters for initial estimators for computing adaptive weights.
-* `K`: The value of `K` used for the K-fold cross validation.
+* `K`: The value of `K` used for the K-fold CV.
 * `maxit`: Maximum iteration to stop the algorithm. 
 * `tol`: Tolerance to stop the algorithm. 
 
@@ -47,8 +47,27 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 * `phi`: Optimal smoothness parameter. 
 * `lambda1`: Optimal local sparsity parameter. 
 * `lambda2`: Optimal global sparsity parameter
+* `score`:  The matrix of SSE over all possible parameters for K-fold CV only in `cv.FadDoS`, 
 
 ## Examples
 
+We first generate simulation data and randomly select 200 samples as our training set. 
+
+```
+dat <- generate.test.data(nruns = 1, N=1200, beta1 = beta0.func, beta2 = beta1.func, beta3 = beta2.func)
+train.index <- sample(1:1250, 200)
+Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
+y  <- dat[[1]]$y[train.index,] - dat[[1]]$intercept
+```
+
+With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS` 
+
+```
+phi <- 5e-5 #smoothness parameter
+lambda1 <- 1000 #local sparsity parameter
+lambda2 <- 5 #global sparsity parameter
+
+result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive=TRUE, maxit=5000, tol=0.0005, lambdas = c(1e-3,1e-4,1e-5,1e-6))
+```
 
 

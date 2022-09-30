@@ -28,4 +28,17 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 ```
 
 ### Arguments
-* Xt: 
+* `Xt`: List of multiple functional predictors. 
+* `y`: Vector of scalar responses. 
+* `intercept`: Intercepts of multivariate FLR model. The default is `TRUE`.
+* `tps`: Domain of functional predictors. If `NULL` (default), the domain will be $[0,1]$. 
+* `nbasis`: The number of B-spline basis specified by users. 
+* `phi`: Smoothness parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
+* `lambda1`: Local sparsity parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
+* `lambda2`: Global sparsity parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
+* `adaptive`: Adaptive penalization is used. If `FALSE`, it is FDoS estimator. 
+* `lambdas`: Tuning parameters for initial estimators for computing adaptive weights.
+* `K`: The value of `K` used for the K-fold cross validation.
+* `maxit`: Maximum iteration to stop the algorithm. 
+* `tol`: Tolerance to stop the algorithm. 
+

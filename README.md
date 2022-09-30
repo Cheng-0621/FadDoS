@@ -55,9 +55,9 @@ We first generate simulation data and randomly select 200 samples as our trainin
 
 ```
 dat <- generate.test.data(nruns = 1, N=1200, beta1 = beta0.func, beta2 = beta1.func, beta3 = beta2.func)
-train.index <- sample(1:1250, 200)
+train.index <- sample(1:1200, 200)
 Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
-y  <- dat[[1]]$y[train.index,] - dat[[1]]$intercept
+y  <- dat[[1]]$y[train.index,] 
 ```
 
 With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS`.
@@ -72,7 +72,11 @@ result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1,
 Generally, we would like to find optimal parameters using K-fold cross-validation for multivariate FLR models. We can use 	`cv.FadDoS` as follows. 
 
 ```
-cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
+phi <- seq(3e-5, 7-5, length.out=5)
+lambda1 <- seq(1000, 1200, length.out=5)
+lambda2 <- seq(3, 5, length.out=5)
+
+cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
 ```
 
 

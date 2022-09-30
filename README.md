@@ -50,3 +50,5 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 
 ## Examples
 
+
+

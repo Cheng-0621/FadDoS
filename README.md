@@ -71,3 +71,5 @@ result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1,
 ```
 
 
+
+

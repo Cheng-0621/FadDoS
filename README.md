@@ -15,4 +15,14 @@ of coefficient functions with nice double-sparsity and smoothness control.
 
 
 ## Main Functions
-* `FDoS`: Fit multivariate FLR models with known tuning parameters and obtain coefficient estimates with double-sparsity property.
+* `FadDoS`: Fits multivariate FLR models with known tuning parameters and obtains coefficient function estimates with double-sparsity property.
+
+```
+FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, adaptive=FALSE, lambdas, maxit, tol)
+```
+
+* `cv.FadDoS`: Does k-fold cross-validation for FadDoS, produces coefficient function estimates by optimal tuning parameter. 
+
+```
+cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adaptive=FALSE, lambdas, K, maxit, tol)
+```

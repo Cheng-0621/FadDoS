@@ -13,7 +13,10 @@ of sparse group lasso and adaptive penalization. By solving an optimization prob
 regularization and smoothing splines in a single objective function, we can provide the estimates
 of coefficient functions with nice double-sparsity and smoothness control.
 
+
 ## Main Functions
+The two main functions of the FadDoS estimator are:
+
 * `FadDoS`: Fits multivariate FLR models with known tuning parameters and obtains coefficient function estimates with double-sparsity property.
 
 ```
@@ -78,6 +81,12 @@ lambda2 <- seq(3, 5, length.out=5)
 
 cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
 ```
+## Files 
+* `admm.R`: The main algorithm of our proposed FadDoS estimator. 
+* `generate.data.R`: The procedures to generate training and testing data in simulation studies. 
+* `demo.simu.R`: A demo script for a simulation study of the FadDoS estimator.
+* `TUG.demo.rds`: A example dataset of Time Up \& Go test of the elderly. 
+* `TUG.demo.R`:  A 3D animation of the example dataset. 
 
 ## Authors
 * Cheng Cao, Jiguo Cao, Hailiang Wang, Kwok-Leung Tsui, Xinyue Li

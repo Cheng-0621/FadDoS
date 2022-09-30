@@ -13,7 +13,6 @@ of sparse group lasso and adaptive penalization. By solving an optimization prob
 regularization and smoothing splines in a single objective function, we can provide the estimates
 of coefficient functions with nice double-sparsity and smoothness control.
 
-
 ## Main Functions
 * `FadDoS`: Fits multivariate FLR models with known tuning parameters and obtains coefficient function estimates with double-sparsity property.
 
@@ -26,7 +25,6 @@ FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, adaptive=
 ```
 cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adaptive=FALSE, lambdas, K, maxit, tol)
 ```
-
 ### Arguments
 * `Xt`: List of multiple functional predictors. 
 * `y`: Vector of scalar responses. 
@@ -41,4 +39,6 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 * `K`: The value of `K` used for the K-fold cross validation.
 * `maxit`: Maximum iteration to stop the algorithm. 
 * `tol`: Tolerance to stop the algorithm. 
+
+## Examples
 

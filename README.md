@@ -3,7 +3,7 @@
 ## Description
 Sensor devices have been increasingly used in engineering and health studies recently,
 and the captured multi-dimensional signals can be assessed under multivariate functional
-linear regression model. Kinect sensor is one of the advanced motion sensing devices providing human activity tracking of twenty-five joints, which can be used to recognize activities,
+linear regression (FLR) model. Kinect sensor is one of the advanced motion sensing devices providing human activity tracking of twenty-five joints, which can be used to recognize activities,
 characterize mobility and evaluate physical health. Motivated by high-dimensional Kinect
 sensor signals, we propose a novel functional adaptive double-sparsity (FadDoS) estimator,
 which can achieve global sparsity via functional variable selection and local sparsity via sparse
@@ -15,3 +15,4 @@ of coefficient functions with nice double-sparsity and smoothness control.
 
 
 ## Main Functions
+*`FDoS`: Fit multivariate FLR models with known tuning parameters and obtain coefficient estimates with double-sparsity property.

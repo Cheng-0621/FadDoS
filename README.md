@@ -58,7 +58,8 @@ Suppose the multivariate FLR model is as follows:
 $$Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i}, \ \ i=1,\dots,n,$$
  where $\epsilon_{i} \sim N(0,1)$, $X_{ij}(t)$ is functional covariates. Three different types of coefficient functions are considered, each representing a unique condition: \\
 
-(i) $\beta_{1}(t)$ has a zero subregion 
+(i) $\beta_{1}(t)$ has a zero subregion
+%%latex 
 $$\beta_{1}(t) =
         \begin{dcases}
         2\sin{(3\pi t)} & 0 \leq t \leq 1/3 \\

@@ -66,7 +66,9 @@ $$
         -2\sin{(3\pi t)} & 2/3 \leq t \leq 1;
         \end{dcases}
 $$
+
 (ii) $\beta_{2}(t)$ has no zero subregion but two crossings at zero, such that $\beta_{2}(t) = 1.5t^{2} + 2\sin{(3\pi t)}$; 
+
 (iii) $\beta_{j}(t)=0$ for $j=3,\dots,10$, indicating that the functional covariate has no contribution to the response throughout the entire time domain. 
 
 We first generate simulation data and randomly select 200 samples as our training set.

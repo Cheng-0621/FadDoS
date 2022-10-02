@@ -57,15 +57,14 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 Suppose the multivariate FLR model is as follows:
 $$Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i}, \ \ i=1,\dots,n,$$
  where $\epsilon_{i} \sim N(0,1)$, $X_{ij}(t)$ is functional covariates. Three different types of coefficient functions are considered, each representing a unique condition: \\
+
 (i) $\beta_{1}(t)$ has a zero subregion 
-$$
-    \beta_{1}(t) =
+$$\beta_{1}(t) =
         \begin{dcases}
         2\sin{(3\pi t)} & 0 \leq t \leq 1/3 \\
         0 & \text{if} \ 1/3 < t < 2/3 \\
         -2\sin{(3\pi t)} & 2/3 \leq t \leq 1;
-        \end{dcases}
-$$
+        \end{dcases}$$
 
 (ii) $\beta_{2}(t)$ has no zero subregion but two crossings at zero, such that $\beta_{2}(t) = 1.5t^{2} + 2\sin{(3\pi t)}$; 
 

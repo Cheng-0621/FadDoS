@@ -112,3 +112,5 @@ cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, la
 
 
 
+
+

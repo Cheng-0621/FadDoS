@@ -56,7 +56,7 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 
 Suppose that $Y_{i}$ be the scalar response and $X_{ij}(t)$ be the $j$th functional covariate for subject $i$ observed at time $t$ in domain $\mathcal{T}$, the multivariate FLR model is as follows:
 $$Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i}, \ \ i=1,\dots,n,$$
- where $\epsilon_{i} \sim N(0,1)$. Three different types of coefficient functions are considered, each representing a unique condition: 
+ where $\mu=1$ and $\epsilon_{i} \sim N(0,1)$. Three different types of coefficient functions are considered, each representing a unique condition: 
  
 (i) $\beta_{1}(t)$ has a zero subregion
 

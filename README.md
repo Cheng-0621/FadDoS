@@ -61,19 +61,12 @@ $$Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i
 (i) $\beta_{1}(t)$ has a zero subregion
 
 $$
-\mathrm{CE}(p, y) = \begin{cases}
-    -\log(p) & \text{if } y = 1 \\ 
-    -\log(1-p) & \text{otherwise.}
+\beta_{1}(t) = \begin{cases}
+    2\sin{(3\pi t)} & 0 \leq t \leq 1/3 \\
+    0 & \text{if} \ 1/3 < t < 2/3 \\
+    -2\sin{(3\pi t)} & 2/3 \leq t \leq 1;
 \end{cases}
 $$
-
-$$\beta_{1}(t) =\\{
-        2\sin{(3\pi t)} & 0 \leq t \leq 1/3 \\
-        0 & \text{if} \ 1/3 < t < 2/3 \\
-        -2\sin{(3\pi t)} & 2/3 \leq t \leq 1;
-\\}$$
-
-```        
 
 (ii) $\beta_{2}(t)$ has no zero subregion but two crossings at zero, such that $\beta_{2}(t) = 1.5t^{2} + 2\sin{(3\pi t)}$; 
 

@@ -54,14 +54,31 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 
 ## Examples
 
-We first generate simulation data and randomly select 200 samples as our training set. 
+Suppose the multivariate FLR model is as follows:
+\begin{equation*}
+Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i}, \ \ i=1,\dots,n,
+ \end{equation*}
+ where $\epsilon_{i} \sim N(0,1)$, $X_{ij}(t)$ is functional covariates. Three different types of coefficient functions are considered, each representing a unique condition: \\
+(i) $\beta_{1}(t)$ has a zero subregion 
+\begin{align*}
+    \beta_{1}(t) =
+        \begin{dcases}
+        2\sin{(3\pi t)} & 0 \leq t \leq 1/3 \\
+        0 & \text{if} \ 1/3 < t < 2/3 \\
+        -2\sin{(3\pi t)} & 2/3 \leq t \leq 1;
+        \end{dcases}
+\end{align*}
+(ii) $\beta_{2}(t)$ has no zero subregion but two crossings at zero, such that $\beta_{2}(t) = 1.5t^{2} + 2\sin{(3\pi t)}$; 
+(iii) $\beta_{j}(t)=0$ for $j=3,\dots,10$, indicating that the functional covariate has no contribution to the response throughout the entire time domain. 
 
+We first generate simulation data and randomly select 200 samples as our training set.
 ```
 dat <- generate.test.data(nruns = 1, N=1200, beta1 = beta0.func, beta2 = beta1.func, beta3 = beta2.func)
 train.index <- sample(1:1200, 200)
 Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
 y  <- dat[[1]]$y[train.index,] 
 ```
+
 
 With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS`.
 

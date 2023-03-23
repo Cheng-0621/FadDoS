@@ -1,5 +1,5 @@
-source("~/Documents/CityU/research/FadDoS/GitHub/generate.data.R")
-source("~/Documents/CityU/research/FadDoS/GitHub/admm.R")
+source("generate.data.R")
+source("admm.R")
 
 ################################
 ####Generate Simulation Data####

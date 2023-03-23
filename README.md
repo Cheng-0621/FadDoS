@@ -1,17 +1,7 @@
-# Functional Adaptive Double-Sparsity Estimator for Multivariate Functional Linear Regression Models (FadDoS)
+# Functional Adaptive Double-Sparsity Estimator for Functional Linear Regression Model with Multiple Functional Covariates 
 
 ## Description
-Sensor devices have been increasingly used in engineering and health studies recently,
-and the captured multi-dimensional signals can be assessed under multivariate functional
-linear regression (FLR) model. Kinect sensor is one of the advanced motion sensing devices providing human activity tracking of twenty-five joints, which can be used to recognize activities,
-characterize mobility and evaluate physical health. Motivated by high-dimensional Kinect
-sensor signals, we propose a novel functional adaptive double-sparsity (FadDoS) estimator,
-which can achieve global sparsity via functional variable selection and local sparsity via sparse
-coefficient estimation simultaneously. The combination of global and local sparsity is termed as
-double-sparsity. The proposed estimator achieve double-sparsity through functional generalization
-of sparse group lasso and adaptive penalization. By solving an optimization problem that combines
-regularization and smoothing splines in a single objective function, we can provide the estimates
-of coefficient functions with nice double-sparsity and smoothness control.
+Sensor devices have been increasingly used in engineering and health studies recently, and the captured multi-dimensional activity and vital sign signals can be studied in association with health outcomes to inform public health. The common approach is the scalar-on-function regression model, in which health outcomes are the scalar responses while high-dimensional sensor signals are the functional covariates, but how to effectively interpret results becomes difficult. In this study, we propose a new Functional Adaptive Double-Sparsity (FadDoS) estimator based on functional regularization of sparse group lasso with multiple functional predictors, which can achieve global sparsity via functional variable selection and local sparsity via zero-subinterval identification within coefficient functions. We prove that the FadDoS estimator converges at a bounded rate and satisfies the oracle property under mild conditions. Extensive simulation studies confirm the theoretical properties and exhibit excellent performances compared to existing approaches. Application to a Kinect sensor study that utilized an advanced motion sensing device tracking human multiple joint movements and conducted among community-dwelling elderly demonstrates how the FadDoS estimator can effectively characterize the detailed association between joint movements and physical health assessments. The proposed method is not only effective in Kinect sensor analysis but also applicable to broader fields, where multi-dimensional sensor signals are collected simultaneously, to expand the use of sensor devices in health studies and facilitate sensor data analysis.
 
 
 ## Main Functions

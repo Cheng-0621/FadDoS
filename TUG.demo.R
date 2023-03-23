@@ -3,7 +3,7 @@ if (!require("paletteer")) install.packages("paletteer")
 library(plotly)
 library(paletteer)
 
-dat <- readRDS("./GitHub/TUG.demo.rds")
+dat <- readRDS("../FadDoS/GitHub/TUG.demo.rds")
 
 fig <- dat %>%
   plot_ly(

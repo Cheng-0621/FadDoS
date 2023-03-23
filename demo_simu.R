@@ -1,12 +1,12 @@
-source("generate.data.R")
-source("admm.R")
+source("~/Documents/CityU/research/FadDoS/GitHub/generate.data.R")
+source("~/Documents/CityU/research/FadDoS/GitHub/admm.R")
 
 ################################
 ####Generate Simulation Data####
 ################################
 
 dat <- generate.test.data(nruns = 1, N=1200, beta1 = beta0.func, beta2 = beta1.func, beta3 = beta2.func)
-train.index <- sample(1:1250, 200)
+train.index <- sample(1:1200, 200)
 Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
 y  <- dat[[1]]$y[train.index,] 
 

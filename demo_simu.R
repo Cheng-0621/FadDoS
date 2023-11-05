@@ -21,8 +21,8 @@ lambda1 <- 1000
 lambda2 <- 5
 time <- seq(0, 1, length.out = 1000)
 
-result <- FadDoS(Xt=Xt, y=y, intercept=T, tps=time, nbasis=30, phi=phi, lambda1 = lambda1, lambda2 = lambda2,
-                 adaptive=TRUE, maxit=5000, tol=0.0005, lambdas = c(1e-3,1e-4,1e-5,1e-6))
+result <- FadDoS(Xt=Xt, y=y, intercept=T, tps=time, nbasis=30, phi=phi, 
+                 lambda1 = lambda1, lambda2 = lambda2, adaptive=TRUE)
 
 #coefficient functions estimates
 betahat <- result$beta.hat

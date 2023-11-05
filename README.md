@@ -10,13 +10,13 @@ The two main functions of the FadDoS estimator are:
 * `FadDoS`: Fits multivariate FLR models with known tuning parameters and obtains coefficient function estimates with double-sparsity property.
 
 ```
-FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, adaptive=FALSE, lambdas, maxit, tol)
+FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, adaptive=FALSE, lambdas, standardize, maxit, tol)
 ```
 
 * `cv.FadDoS`: Does k-fold cross-validation (CV) for FadDoS, produces coefficient function estimates by optimal tuning parameter. 
 
 ```
-cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adaptive=FALSE, lambdas, K, maxit, tol)
+cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adaptive=FALSE, lambdas, K, standardize, maxit, tol)
 ```
 ### Arguments
 * `Xt`: List of multiple functional predictors. 
@@ -28,10 +28,11 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 * `lambda1`: Local sparsity parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
 * `lambda2`: Global sparsity parameter. In `cv.FadDoS`, it is a vector of tuning parameters. 
 * `adaptive`: Adaptive penalization is used. If `FALSE`, it is FDoS estimator. 
-* `lambdas`: Tuning parameters for initial estimators for computing adaptive weights.
+* `lambdas`: Tuning parameters for initial estimators for computing adaptive weights. Default values are `c(1e-3,1e-4,1e-5,1e-6)`.
 * `K`: The value of `K` used for the K-fold CV.
-* `maxit`: Maximum iteration to stop the algorithm. 
-* `tol`: Tolerance to stop the algorithm. 
+* `standardize`: Standardization of the design matrix. If `FALSE` (default), no standardization is implemented.
+* `maxit`: Maximum iteration to stop the algorithm. Default vaule is 5000.
+* `tol`: Tolerance to stop the algorithm. Defualt value is 0.0005
 
 ### Values
 * `intercept`: The estimated intercept. 
@@ -46,7 +47,7 @@ cv.FadDoS(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2,  adapt
 
 Suppose that $Y_{i}$ be the scalar response and $X_{ij}(t)$ be the $j$th functional covariate for subject $i$ observed at time $t$ in domain $\mathcal{T}$, the multivariate FLR model is as follows:
 $$Y_{i}  =\mu + \sum_{j=1}^{10}\int_{0}^{1}X_{ij}(t)\beta_{j}(t)dt + \epsilon_{i}, \ \ i=1,\dots,n,$$
- where $\mu=1$ and $\epsilon_{i} \sim N(0,1)$. Three different types of coefficient functions are considered, each representing a unique condition: 
+ where $\mu=1$ and $\epsilon_{i} \sim N(0,\sigma^{2}_{\epsillon})$. The measurement error $\sigma^{2}_{\epsillon}$ is chosen so that signal-to-noise ratio equals to 4. Three different types of coefficient functions are considered, each representing a unique condition: 
  
 (i) $\beta_{1}(t)$ has a zero subregion
 
@@ -78,7 +79,7 @@ phi <- 5e-5 #smoothness parameter
 lambda1 <- 1000 #local sparsity parameter
 lambda2 <- 5 #global sparsity parameter
 
-result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive=TRUE, maxit=5000, tol=0.0005, lambdas = c(1e-3,1e-4,1e-5,1e-6))
+result <- FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive=TRUE)
 ```
 Generally, we would like to find optimal parameters using K-fold cross-validation for multivariate FLR models. We can use 	`cv.FadDoS` as follows. 
 
@@ -87,7 +88,7 @@ phi <- seq(3e-5, 7-5, length.out=5)
 lambda1 <- seq(1000, 1200, length.out=5)
 lambda2 <- seq(3, 5, length.out=5)
 
-cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5, maxit = 5000, tol=0.0005)
+cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, lambda1 = lambda1, lambda2 = lambda2, adaptive = TRUE, K = 5)
 ```
 ## Files 
 * `admm.R`: The main algorithm of our proposed FadDoS estimator. 

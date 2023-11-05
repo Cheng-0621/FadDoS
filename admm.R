@@ -1,3 +1,7 @@
+if(!require(Matrix)) install.packages("Matrix")
+if(!require(splines)) install.packages("splines")
+
+
 shrinkage1 <- function(y, kappa) 
 {
   #beta <- sapply(y, function(i) max(0, i - kappa) - max(0, -i - kappa)) they are equivalent 
@@ -92,7 +96,7 @@ admm <- function(U, y, intercept, inverseL, group, lambda1, lambda2, rho, maxit=
     
     #stop criterion
     epsilon <- norm(b.new-b.old, type = "2")/max(1, norm(b.new, type = "2"))
-
+    
     if (epsilon <= tol) break
     if (nit == maxit) print("The maximum iteration is reached.")
   }
@@ -151,13 +155,14 @@ initial.estimator <- function(U.ad, y, Omega.diag, lambdas) {
     mse.lam[i] <- mean(mse)
   }
   opt.lam <- lambdas[which.min(mse.lam)]
+  print(paste("The optimal lambda for initial estimator is", opt.lam))
   b.ad <- solve.default(t(U.ad) %*% U.ad + opt.lam*Omega.diag, tol=1*10^(-32)) %*% t(U.ad) %*% y
   b.ad
 }
 
 #main algorithm 
 FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, 
-                   adaptive=FALSE, lambdas=c(1e-3,1e-4,1e-5,1e-6), maxit, tol) 
+                   adaptive=FALSE, lambdas=c(1e-3,1e-4,1e-5,1e-6), standardize=FALSE, maxit=5000, tol=0.0005) 
 { 
   # there is only one functional predictor, convert it into list
   if(is.matrix(Xt)) { 
@@ -185,7 +190,7 @@ FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda
   #Psi <-  inprod(bspl, bspl)
   Psi <- delt * t(Bt) %*% Bt  #Psi matrix: approximate norm of bsplines assuming dense design
   dBt <- matrix(NA,nrow(Bt),ncol(Bt))
-
+  
   if (!require(splines)) install.packages("splines")
   
   for (k in 1:ncol(Bt)) # computation of second derivatives of B(t)
@@ -219,6 +224,7 @@ FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda
       Omega.diag <- bdiag(Omega.list)
     }
     
+    if (standardize) U.ad <- scale(U.ad)
     b.ad <- initial.estimator(U.ad, y, Omega.diag, lambdas=lambdas)
     
     #initial estimator
@@ -235,8 +241,9 @@ FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda
     lambda2 <- rep(lambda2, p)
   }
   
-  result <- FadDoS.alg(X,y,intercept,Bt,group,delt,phi,lambda1,lambda2,Psi,Omega,maxit=maxit,tol=tol)
-  output <- list(intercept=result$intercept, beta.hat=result$beta.hat, yhat=result$yhat, phi=phi, lambda1=lambda1, lambda2=lambda2)
+  result <- FadDoS.alg(X,y,intercept,Bt,group,delt,phi,lambda1,lambda2,Psi,Omega,standardize,maxit=maxit,tol=tol)
+  output <- list(intercept=result$intercept, beta.hat=result$beta.hat, yhat=result$yhat,
+                 phi=phi, lambda1=lambda1, lambda2=lambda2)
   
   class(output) <- "FadDoS"
   return(output)
@@ -244,9 +251,9 @@ FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda
 
 # phi/lambda1/lambda2 should be vectors of user-specified tunning parameters
 cv.FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lambda2, 
-                      adaptive=FALSE, lambdas=c(1e-3,1e-4,1e-5,1e-6), K, maxit, tol) 
+                      adaptive=FALSE, lambdas=c(1e-3,1e-4,1e-5,1e-6), K=5, standardize=FALSE, maxit=5000, tol=0.0005)
 {
- 
+  
   if(is.matrix(Xt)) {  # there is only one functional predictor, convert it into list
     X <- list()
     X[[1]] <- Xt
@@ -300,6 +307,7 @@ cv.FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lam
     Omega.list <- lapply(1:p, function(x) Omega)
     Omega.diag <- bdiag(Omega.list)
     
+    if (standardize) U.ad <- scale(U.ad)
     b.ad <- initial.estimator(U.ad, y, Omega.diag, lambdas=lambdas)
     
     #initial estimator
@@ -335,7 +343,8 @@ cv.FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lam
           test.index <- idx[(s*(k-1)+1):min(s*k,n)]
           train.index <- idx[-((s*(k-1)+1):min(s*k,n))]
           newX.train <- lapply(X, function(l) l[train.index,])
-          fit.cv <- FadDoS.alg(newX.train, y[train.index], intercept,Bt,group,delt,phi=phi[nphi],lambda1=lambda1.w,lambda2=lambda2.v,Psi,Omega,maxit=maxit,tol=tol)
+          fit.cv <- FadDoS.alg(newX.train, y[train.index], intercept,Bt,group,delt,phi=phi[nphi],
+                               lambda1=lambda1.w, lambda2=lambda2.v,Psi,Omega,standardize,maxit=maxit,tol=tol)
           newX.test <- lapply(X, function(l) l[test.index,])
           yhat <- predict.FadDoS(fit.cv, newXt=newX.test, tps=NULL)
           rss <- sum((yhat-y[test.index])^2)
@@ -363,15 +372,17 @@ cv.FadDoS <- function(Xt, y, intercept=TRUE, tps=NULL, nbasis, phi, lambda1, lam
     lam2 <- rep(lambda2.opt, p)
   }
   
-  result <- FadDoS.alg(X,y,intercept,Bt,group,delt,phi=phi.opt,lambda1=lam1,lambda2=lam2,Psi,Omega,maxit=maxit,tol=tol)
-  output <- list(intercept=result$intercept, beta.hat=result$beta.hat, yhat=result$yhat, score=err.phi, phi=phi.opt, lambda1=lambda1.opt, lambda2=lambda2.opt)
+  result <- FadDoS.alg(X,y,intercept,Bt,group,delt,phi=phi.opt,lambda1=lam1,lambda2=lam2,Psi,Omega,
+                       standardize,maxit=maxit,tol=tol)
+  output <- list(intercept=result$intercept, beta.hat=result$beta.hat, yhat=result$yhat, score=err.phi,
+                 phi=phi.opt, lambda1=lambda1.opt, lambda2=lambda2.opt)
   
   return(output)
 }
 
 
 #lambda1/lambda2 are length p vectors of tuning parameters 
-FadDoS.alg <- function(X,y,intercept,Bt,group,delt,phi,lambda1,lambda2,Psi,Omega,maxit,tol)
+FadDoS.alg <- function(X,y,intercept,Bt,group,delt,phi,lambda1,lambda2,Psi,Omega,standardize=FALSE,maxit,tol)
 {
   p <- length(X)
   
@@ -384,7 +395,10 @@ FadDoS.alg <- function(X,y,intercept,Bt,group,delt,phi,lambda1,lambda2,Psi,Omega
     U <- cbind(U, Ui)
   }
   
-  fit <- admm(U=U, y=y, intercept=intercept, inverseL=inverseL, group=group, lambda1=lambda1, lambda2=lambda2, rho=10, maxit=maxit, tol=tol) 
+  if (standardize) U <- scale(U)
+  
+  fit <- admm(U=U, y=y, intercept=intercept, inverseL=inverseL, group=group, 
+              lambda1=lambda1, lambda2=lambda2, rho=10, maxit=maxit, tol=tol) 
   intercept <- fit$intercept
   coefficient <- fit$Dbeta #coefficient
   names(coefficient) <- names(group)

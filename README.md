@@ -97,6 +97,7 @@ cv.result <- cv.FadDoS(Xt=Xt, y=y, intercept=T, nbasis=30, tps=time, phi=phi, la
 * `TUG.demo.R`:  A 3D animation of the example dataset. 
 
 ## Authors
+2023
 * Cheng Cao, Jiguo Cao, Hailiang Wang, Kwok-Leung Tsui, Xinyue Li
 
 

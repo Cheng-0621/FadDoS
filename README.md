@@ -71,7 +71,6 @@ Xt <- lapply(dat[[1]]$x, function(i) i[train.index,])
 y  <- dat[[1]]$y[train.index,] 
 ```
 
-
 With pre-specified hyper-parameters, we are able to fit multivariate FLR model. The call the FadDoS estimator by using `FadDoS`.
 
 ```
